@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'core/config/app_config.dart';
+import 'core/network/dio_client.dart';
+import 'features/group/data/datasources/group_remote_ds.dart';
+import 'features/group/data/repositories_impl/group_repository_impl.dart';
+import 'features/group/presentation/providers/group_provider.dart';
 import 'core/routing/app_router.dart';
 
 class AuthState extends ChangeNotifier {
@@ -20,9 +25,13 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final dio = buildDio(AppConfig.devLan.baseUrl);
+    final groupRepo = GroupRepositoryImpl(GroupRemoteDataSource(dio));
+
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => AuthState()),
+        ChangeNotifierProvider(create: (_) => GroupProvider(groupRepo)..loadAll()),
       ],
       child: Builder(
         builder: (context) {
@@ -31,8 +40,11 @@ class App extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             title: 'EduJournal',
             routerConfig: router,
-            theme: ThemeData.light(),
-            darkTheme: ThemeData.light(),
+            theme: ThemeData(
+              colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
+              useMaterial3: true,
+            ),
+            darkTheme: ThemeData.dark(),
           );
         },
       ),

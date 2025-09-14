@@ -7,7 +7,10 @@ class GroupCardPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Group $groupId')),
+      appBar: AppBar(
+        title: Text('Group $groupId'),
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+      ),
       body: Center(child: Text('Details for $groupId')),
     );
   }

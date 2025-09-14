@@ -1,24 +1,18 @@
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 import '../../features/group/presentation/routes.dart' as group_routes;
+import '../../features/student/presentation/routes.dart' as student_routes;
 import 'guards.dart';
 
 GoRouter buildAppRouter(AuthGuardSource authGuardSource) {
   return GoRouter(
-    initialLocation: '/groups',
+    initialLocation: '/students',
     routes: [
       shellRouteWithBottomNav(
-        routes: [
-          ...group_routes.routes,
-        ],
-      ),
-      GoRoute(
-        path: '/login',
-        name: 'login',
-        builder: (_, __) => const LoginPage(),
+        studentsRoutes: student_routes.routes,
+        groupsRoutes: group_routes.routes,
       ),
     ],
-    redirect: (context, state) => authRedirect(context, state, authGuardSource),
   );
 }
 
