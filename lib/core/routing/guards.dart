@@ -11,8 +11,8 @@ StatefulShellRoute shellRouteWithBottomNav({
   return StatefulShellRoute.indexedStack(
     builder: (context, state, navigationShell) {
       const destinations = [
-        NavigationDestination(icon: Icon(Icons.people), label: 'Students'),
-        NavigationDestination(icon: Icon(Icons.group), label: 'Groups'),
+        NavigationDestination(icon: Icon(Icons.people), label: 'Студенты'),
+        NavigationDestination(icon: Icon(Icons.group), label: 'Группы'),
       ];
       return Scaffold(
         body: navigationShell,

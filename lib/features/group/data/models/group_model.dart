@@ -15,6 +15,6 @@ class GroupModel extends Group {
   Map<String, dynamic> toJson() => {
     if (edu_group_id != null) 'edu_group_id': edu_group_id,
     'name': name,
-    if (created != null) 'created': created,
+    'created': created,
   };
 }

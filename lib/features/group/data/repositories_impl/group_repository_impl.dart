@@ -8,5 +8,5 @@ class GroupRepositoryImpl implements GroupRepository {
   GroupRepositoryImpl(this.remote);
 
   @override
-  Future<List<Group>> getAll() => remote.getAll();
+  Future<List<Group>> getGroupList() => remote.getGroupList();
 }

@@ -13,7 +13,7 @@ class GroupPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Groups'),
+        title: const Text('Группы'),
         backgroundColor: theme.colorScheme.inversePrimary,
       ),
       body: Builder(
@@ -22,19 +22,25 @@ class GroupPage extends StatelessWidget {
           if (vm.error != null) return Center(child: Text('Ошибка: ${vm.error}'));
           if (vm.items.isEmpty) return const Center(child: Text('Пусто'));
 
-          return ListView.builder(
-            itemCount: vm.items.length,
-            itemBuilder: (_, i) {
-              final g = vm.items[i];
-              return ListTile(
-                title: Text(g.name ?? 'без названия'),
-                subtitle: Text((g.edu_group_id ?? 'без id') as String),
-                trailing: IconButton(
-                  icon: const Icon(Icons.delete),
-                  onPressed: g.edu_group_id == null ? null : () => print('delete'),
-                ),
-              );
+          return RefreshIndicator.adaptive(
+            onRefresh: () async {
+              await context.read<GroupProvider>().getGroupList();
             },
+            child: ListView.separated(
+              itemCount: vm.items.length,
+              itemBuilder: (_, i) {
+                final g = vm.items[i];
+                return ListTile(
+                  title: Text(g.name ?? 'без названия'),
+                  subtitle: Text(g.created?.toString() ?? 'без created'),
+                  trailing: IconButton(
+                    icon: const Icon(Icons.delete),
+                    onPressed: g.edu_group_id == null ? null : () => print('delete'),
+                  ),
+                );
+              },
+              separatorBuilder: (_, __) => const Divider(),
+            ),
           );
         },
       ),

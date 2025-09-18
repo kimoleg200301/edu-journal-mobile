@@ -10,10 +10,10 @@ class GroupProvider extends ChangeNotifier {
   String? error;
   bool loading = false;
 
-  Future<void> loadAll() async {
+  Future<void> getGroupList() async {
     loading = true; error = null; notifyListeners();
     try {
-      items = await repo.getAll();
+      items = await repo.getGroupList();
     } catch (e) {
       error = e.toString();
     } finally {

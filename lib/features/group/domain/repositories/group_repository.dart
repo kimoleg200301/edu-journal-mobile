@@ -1,5 +1,5 @@
 import '../entities/group.dart';
 
 abstract class GroupRepository {
-  Future<List<Group>> getAll();
+  Future<List<Group>> getGroupList();
 }

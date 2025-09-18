@@ -1,3 +1,7 @@
+import 'package:edu_journal/features/student/data/datasources/student_remote_ds.dart';
+import 'package:edu_journal/features/student/data/repositories_impl/student_repository_impl.dart';
+import 'package:edu_journal/features/student/domain/repositories/student_repository.dart';
+import 'package:edu_journal/features/student/presentation/providers/student_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'core/config/app_config.dart';
@@ -27,11 +31,13 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     final dio = buildDio(AppConfig.devLan.baseUrl);
     final groupRepo = GroupRepositoryImpl(GroupRemoteDataSource(dio));
+    final studentRepo = StudentRepositoryImpl(StudentRemoteDataSource(dio));
 
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => AuthState()),
-        ChangeNotifierProvider(create: (_) => GroupProvider(groupRepo)..loadAll()),
+        ChangeNotifierProvider(create: (_) => GroupProvider(groupRepo)..getGroupList()),
+        ChangeNotifierProvider(create: (_) => StudentProvider(studentRepo)..getStudentList()),
       ],
       child: Builder(
         builder: (context) {
